@@ -1,0 +1,55 @@
+{
+  "name": "javascript-state-machine",
+  "description": "This is a nodejs version of finite state machine which try to create/convert an object into a finite state machine",
+  "homepage": "https://github.com/cloudgen/node-finite-state-machine",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudgen/node-finite-state-machine"
+  },
+  "keywords": [
+    "finite state machine",
+    "state machine",
+    "server"
+  ],
+  "author": {
+    "name": "Cloudgen Wong",
+    "email": "wongcf22@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "Cloudgen Wong",
+      "email": "wongcf22@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "main": "lib/state-machine.js",
+  "files": [
+    "lib/**/*.js",
+    "dist/**/*.js"
+  ],
+  "directories": {},
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "fs-sync": "^1.0.3",
+    "glob": "^7.1.1",
+    "nyc": "^10.3.2",
+    "pascal-case": "^2.0.0",
+    "uglify-js": "^2.7.5",
+    "webpack": "^2.2.0-rc.1"
+  },
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run watch",
+    "test": "nyc ava -v && nyc report --reporter=html"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js"
+    ],
+    "source": [
+      "src/**/*.js"
+    ]
+  },
+  "sourceMap": false,
+  "instrument": false
+}
