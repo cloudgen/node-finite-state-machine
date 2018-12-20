@@ -29,10 +29,10 @@
   ],
   "directories": {},
   "devDependencies": {
-    "ava": "^0.17.0",
+    "ava": "^1.0.1",
     "fs-sync": "^1.0.3",
     "glob": "^7.1.1",
-    "nyc": "^10.3.2",
+    "nyc": "^13.1.0",
     "pascal-case": "^2.0.0",
     "uglify-js": "^2.7.5",
     "webpack": "^2.2.0-rc.1"
