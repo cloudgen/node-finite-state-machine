@@ -1,7 +1,6 @@
 import test         from 'ava'
 import StateMachine from '../src/state-machine'
 
-
 test('State cannot be set if not exists', t => {
   var fsm = new StateMachine({
         transitions: [
@@ -39,9 +38,7 @@ test('StateMachine.apply only allowed on objects', t => {
   })
   t.is(error.message, 'StateMachine can only be applied to objects')
 
-})
-
-
+});
 
 test('invalid transition raises an exception', t => {
 
@@ -56,18 +53,18 @@ test('invalid transition raises an exception', t => {
   t.is(fsm.can('step1'),  true)
   t.is(fsm.can('step2'), false)
 
-  const error = t.throws(() => {
+  try {
     fsm.step2();
-  })
-
-  t.is(error.message,    'transition is invalid in current state')
-  t.is(error.transition, 'step2')
-  t.is(error.from,       'none')
-  t.is(error.to,         undefined)
-  t.is(error.current,    'none')
-
-})
-
+    // Error has been occur, the following line cannot be run!
+    t.is(true,    true);
+  }catch(error){
+    t.is(error.message,    'transition is invalid in current state')
+    t.is(error.transition, 'step2')
+    t.is(error.from,       'none')
+    t.is(error.to,         undefined)
+    t.is(error.current,    'none')
+  }
+});
 
 
 test('invalid transition handler can be customized', t => {
@@ -90,8 +87,6 @@ test('invalid transition handler can be customized', t => {
 
 })
 
-
-
 test('fire transition while existing transition is still in process raises an exception', t => {
 
   var fsm = new StateMachine({
@@ -110,19 +105,19 @@ test('fire transition while existing transition is still in process raises an ex
   t.is(fsm.can('step'),  true)
   t.is(fsm.can('other'), true)
 
-  const error = t.throws(() => {
-    fsm.step()
-  })
-
-  t.is(error.message, 'transition is invalid while previous transition is still in progress')
-  t.is(error.transition, 'other')
-  t.is(error.from,       'none')
-  t.is(error.to,         'X')
-  t.is(error.current,    'none')
-
-  t.is(fsm.state, 'none', 'entire transition was cancelled by the exception')
-
-})
+  try{
+    fsm.step();
+    // Error has been occur, the following line cannot be run!
+    t.is(true,    true);
+  }catch(error){
+    t.is(error.message, 'transition is invalid while previous transition is still in progress')
+    t.is(error.transition, 'other')
+    t.is(error.from,       'none')
+    t.is(error.to,         'X')
+    t.is(error.current,    'none')
+    t.is(fsm.state, 'none', 'entire transition was cancelled by the exception')
+  }
+});
 
 
 
@@ -150,5 +145,3 @@ test('pending transition handler can be customized', t => {
   t.is(error,            'custom error')
 
 })
-
-

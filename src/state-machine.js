@@ -40,7 +40,17 @@ var PublicProperties = {
       return this._sm.state;
     },
     set: function(state) {
-      this._sm.setState(state);
+      var supposeError = true;
+      var allStates = this.allStates();
+      for(var s in allStates){
+        if(allStates[s] == state){
+          this._sm.setState(state);
+          supposeError = false;
+        }
+      }
+      if(supposeError){
+        throw Error( 'Cannot set to undefined state');
+      }
     }
   },
   // The purpose of using nonce, is we are trying to get an unique ID in run time.

@@ -18,8 +18,8 @@ class SM{
     this.ENUM       = {};
     this.createTime = Math.floor(Date.now());
     this.updateTime = Math.floor(Date.now());
-    for(var i in config.states){
-      this.ENUM[config.states[i]] = i;
+    for(var i in config.ENUM){
+      this.ENUM[i] = config.ENUM[i];
     }
   }
 

@@ -16,10 +16,24 @@ class Config{
     this.lifecycle   = this.configureLifecycle();
     this.init        = this.configureInitTransition(options.init);
     this.data        = this.configureData(options.data);
+    this.ENUM        = options.ENUM;
     this.methods     = this.configureMethods(options.methods);
     this.map[this.defaults.wildcard] = {};
     this.configureTransitions(options.transitions || []);
     this.plugins = this.configurePlugins(options.plugins, StateMachine.plugins);
+    var enumSize = 0;
+    for(var n in options.ENUM){
+      enumSize ++;
+    }
+    if(enumSize==0){
+      this.ENUM = {};
+      for(var i in this.states){
+        this.ENUM[this.states[i]] = i;
+      }
+    }
+    if(this.ENUM['none']==undefined){
+      this.ENUM['none'] = 0;
+    }
   }
 
   addState(name) {

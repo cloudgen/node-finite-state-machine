@@ -292,15 +292,14 @@ test('factory construction - with enumeration data and methods', t => {
       { name: 'step1', from: 'A', to: 'B' },
       { name: 'step2', from: 'B', to: 'C' }
     ],
+    ENUM: {
+      A:2,
+      B:3,
+      C:4
+    },
+
     data: function(value) {
       this.value=value;
-      return {
-        ENUM: {
-          A:1,
-          B:2,
-          C:3
-        }
-      }
     },
     methods: {
       talk: function() {
@@ -317,9 +316,9 @@ test('factory construction - with enumeration data and methods', t => {
   t.is(fsm2.state, 'A')
   t.is(fsm3.state, 'A')
 
-  t.is(fsm1.talk(), 'A - 1 - 1')
-  t.is(fsm2.talk(), 'A - 1 - 2')
-  t.is(fsm3.talk(), 'A - 1 - 3')
+  t.is(fsm1.talk(), 'A - 2 - 1')
+  t.is(fsm2.talk(), 'A - 2 - 2')
+  t.is(fsm3.talk(), 'A - 2 - 3')
 
   fsm2.step1()
   fsm3.step1()
@@ -329,9 +328,9 @@ test('factory construction - with enumeration data and methods', t => {
   t.is(fsm2.state, 'B')
   t.is(fsm3.state, 'C')
 
-  t.is(fsm1.talk(), 'A - 1 - 1')
-  t.is(fsm2.talk(), 'B - 2 - 2')
-  t.is(fsm3.talk(), 'C - 3 - 3')
+  t.is(fsm1.talk(), 'A - 2 - 1')
+  t.is(fsm2.talk(), 'B - 3 - 2')
+  t.is(fsm3.talk(), 'C - 4 - 3')
 
   t.deepEqual(fsm1.allStates(), [ 'none', 'A', 'B', 'C' ])
   t.deepEqual(fsm2.allStates(), [ 'none', 'A', 'B', 'C' ])

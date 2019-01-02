@@ -1,8 +1,6 @@
 import test         from 'ava';
 import StateMachine from '../src/state-machine';
 
-
-
 const defaults = JSON.stringify(StateMachine.defaults);
 
 test.afterEach.always('restore defaults', t => {
@@ -58,5 +56,3 @@ test.serial('override global initialization defaults (again)', t => {
   t.deepEqual(fsm.transitions(),    [ 'step1' ]);
 
 });
-
-

@@ -1,5 +1,5 @@
 {
-  "name": "javascript-state-machine",
+  "name": "node-finite-state-machine",
   "description": "This is a nodejs version of finite state machine which try to create/convert an object into a finite state machine",
   "homepage": "https://github.com/cloudgen/node-finite-state-machine",
   "repository": {
@@ -46,7 +46,7 @@
     "files": [
       "test/**/*.js"
     ],
-    "source": [
+    "sources": [
       "src/**/*.js"
     ]
   },
