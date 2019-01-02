@@ -1,4 +1,5 @@
 // If the global variable don't have a cache of regex, let's create it
+/* istanbul ignore next */
 if(!global._regex || !global._regex.camelize){
   global._regex = {
     camelize:
@@ -29,6 +30,7 @@ module.exports = function(){
             ].join('')
           ):
           ((third)?
+            /* istanbul ignore next */
             (third.length==1 ?
               third.toUpperCase():
               [

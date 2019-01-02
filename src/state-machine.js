@@ -62,11 +62,13 @@ var PublicProperties = {
       return this._sm.nonce;
     },
     set: function(nonce) {
+      /* istanbul ignore next */
       if(typeof nonce=='number' && parseInt(nonce) == nonce){
         StateMachine.NONCE(nonce);
         this._sm.nonce = nonce;
       } else {
-        throw Error("NONCE should be number ")
+        /* istanbul ignore next */
+        throw Error("NONCE should be number ");
       }
     }
   },
@@ -133,12 +135,15 @@ function StateMachine(options) {
 
 StateMachine.version  = '3.0.1';
 StateMachine.NONCE    = function(id){
+  /* istanbul ignore next */
   if(typeof id=='undefined'){
     return ++stateMachineCount;
   }
+  /* istanbul ignore next */
   if(typeof id=='number'){
     var newId = parseInt(id);
     if(newId > stateMachineCount){
+      /* istanbul ignore next */
       stateMachineCount = newId;
     }
   }

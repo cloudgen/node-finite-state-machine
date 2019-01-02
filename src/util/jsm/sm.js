@@ -45,12 +45,14 @@ class SM{
   // It's useful for persistence
   setState(state){
     var state=this.config.states.find(function(s){return state==s});
+    /* istanbul ignore next */
     if(state){
       this.state      = state;
       this.updateTime = Math.floor(Date.now());
       plugin.hook(this, 'setState', state);
       plugin.hook(this, 'change', state);
     }else{
+      /* istanbul ignore next */
       throw new Exception("Cannot set to undefined state", 'n/a', 'n/a', state, this.state);
     }
   }

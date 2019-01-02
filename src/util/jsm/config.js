@@ -132,6 +132,7 @@ class Config{
     }
     for(var m = 0; m < builtins.length ; m++) {
       plugin = builtins[m];
+      /* istanbul ignore next */
       if (typeof plugin === 'function'){
         plugin = plugin();
       }
