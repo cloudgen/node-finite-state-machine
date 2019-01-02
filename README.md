@@ -1,4 +1,13 @@
 # Node Finite State Machine
+You can find the package in: https://www.npmjs.com/package/node-finite-state-machine
+
+-- OR --
+using the following command to install:
+```bash
+npm i node-finite-state-machine
+```
+
+# History
 
 library for finite state machines. This project has been modified from [Javascript State Machine](https://github.com/jakesgordon/javascript-state-machine) with the following changes:
 
