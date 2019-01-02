@@ -1,5 +1,5 @@
 import test         from 'ava'
-import StateMachine from '../../../../src/state-machine'
+import StateMachine from '../../../../src/NodeFSM'
 
 var dotcfg    = StateMachine.PLUGIN.VISUALIZE.dotcfg, // converts FSM        to DOT CONFIG
     dotify    = StateMachine.PLUGIN.VISUALIZE.dotify; // converts DOT CONFIG to DOT OUTPUT

@@ -1,5 +1,5 @@
 import test         from 'ava'
-import StateMachine from '../src/state-machine'
+import StateMachine from '../src/NodeFSM'
 
 test('State cannot be set if not exists', t => {
   var fsm = new StateMachine({

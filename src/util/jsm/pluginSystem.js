@@ -5,7 +5,7 @@ const mixin = require('../mixin');
 
 module.exports = {
   build: function(target, config) {
-    var n, max, plugin, plugins = config.plugins;
+    let n, max, plugin, plugins = config.plugins;
     for(n = 0, max = plugins.length ; n < max ; n++) {
       plugin = plugins[n];
       if (plugin.methods)
@@ -16,7 +16,7 @@ module.exports = {
   },
 
   hook: function(sm, name, additional) {
-    var n, max, method, plugin,
+    let n, max, method, plugin,
         plugins = sm.config.plugins,
         args    = [sm.context];
     if (additional)

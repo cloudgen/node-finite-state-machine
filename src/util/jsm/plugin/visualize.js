@@ -7,7 +7,7 @@ function visualize(sm, options) {
 function dotcfg(sm, options) {
   options = options || {}
 
-  var config      = dotcfg.fetch(sm),
+  let config      = dotcfg.fetch(sm),
       name        = options.name,
       rankdir     = dotcfg.rankdir(options.orientation),
       states      = dotcfg.states(config, options),
@@ -41,7 +41,7 @@ dotcfg.rankdir = function(orientation) {
 }
 
 dotcfg.states = function(config, options) {
-  var index, states = config.states;
+  let index, states = config.states;
   if (!options.init) { // if not showing init transition, then slice out the implied init :from state
     index  = states.indexOf(config.init.from);
     states = states.slice(0, index).concat(states.slice(index+1));
@@ -50,7 +50,7 @@ dotcfg.states = function(config, options) {
 }
 
 dotcfg.transitions = function(config, options) {
-  var n, max, transition,
+  let n, max, transition,
       init        = config.init,
       transitions = config.options.transitions || [], // easier to visualize using the ORIGINAL transition declarations rather than our run-time mapping
       output = [];
@@ -64,7 +64,7 @@ dotcfg.transitions = function(config, options) {
 }
 
 dotcfg.transition = function(name, from, to, dot, config, options, output) {
-  var n, max, wildcard = config.defaults.wildcard
+  let n, max, wildcard = config.defaults.wildcard
 
   if (Array.isArray(from)) {
     for(n = 0, max = from.length ; n < max ; n++)
@@ -86,8 +86,6 @@ dotcfg.transition = function(name, from, to, dot, config, options, output) {
 
 }
 
-
-
 function pad(name) {
   return " " + name + " "
 }
@@ -100,7 +98,7 @@ function dotify(dotcfg) {
 
   dotcfg = dotcfg || {};
 
-  var name        = dotcfg.name || 'sm',
+  let name        = dotcfg.name || 'sm',
       states      = dotcfg.states || [],
       transitions = dotcfg.transitions || [],
       rankdir     = dotcfg.rankdir,
@@ -128,7 +126,7 @@ dotify.edge = function(edge) {
 }
 
 dotify.edge.attr = function(edge) {
-  var n, max, key, keys = Object.keys(edge).sort(), output = [];
+  let n, max, key, keys = Object.keys(edge).sort(), output = [];
   for(n = 0, max = keys.length ; n < max ; n++) {
     key = keys[n];
     if (key !== 'from' && key !== 'to')

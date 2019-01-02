@@ -22,10 +22,9 @@
     }
   ],
   "license": "MIT",
-  "main": "lib/state-machine.js",
+  "main": "src/NodeFSM.js",
   "files": [
-    "lib/**/*.js",
-    "dist/**/*.js"
+    "src/**/*.js"
   ],
   "directories": {},
   "devDependencies": {

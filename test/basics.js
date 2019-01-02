@@ -1,10 +1,10 @@
 import test         from 'ava';
-import StateMachine from '../src/state-machine';
+import StateMachine from '../src/NodeFSM';
 
 
 
 test('version', t => {
-  t.is(StateMachine.version, '3.0.1');
+  t.is(StateMachine.version, '1.0.0');
 });
 
 

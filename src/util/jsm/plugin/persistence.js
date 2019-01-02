@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = function(options) { options = options || {};
-  var plugin = {
+  let plugin = {
     change: function(instance, state) {
       instance.save(instance.filename,state)
     },
@@ -18,8 +18,8 @@ module.exports = function(options) { options = options || {};
     if(this.filename && this.filename !=''){
       /* istanbul ignore next */
       if(fs.existsSync(this.filename)){
-        var obj = JSON.parse(fs.readFileSync(this.filename, 'utf8'));
-        for(var i in obj){
+        let obj = JSON.parse(fs.readFileSync(this.filename, 'utf8'));
+        for(let i in obj){
           if(typeof obj[i] != "object"){
             this[i] = obj[i];
             /* istanbul ignore next */
@@ -35,9 +35,9 @@ module.exports = function(options) { options = options || {};
       this.filename=filename;
     }
     if(this.filename && this.filename !=''){
-      var state = typeof state == 'undefined' ? this.state : state
-      var obj={state: state};
-      for(var i in this){
+      let newState = typeof state == 'undefined' ? this.state : state;
+      let obj={state: newState};
+      for(let i in this){
         if(typeof this[i] != 'function' && i!='state'){
           if(typeof this[i] != 'object'){
             obj[i] = this[i];
@@ -46,7 +46,7 @@ module.exports = function(options) { options = options || {};
             if(typeof obj[i]=='undefined'){
               obj[i]=[];
             }
-            for(var j in this[i]){
+            for(let j in this[i]){
               /* istanbul ignore next */
               if(typeof this[i][j]!= 'function' && typeof this[i][j]!= 'object'){
                 obj[i].push(this[i][j]);

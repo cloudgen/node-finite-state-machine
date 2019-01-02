@@ -20,14 +20,14 @@ class Config{
     this.methods     = this.configureMethods(options.methods);
     this.map[this.defaults.wildcard] = {};
     this.configureTransitions(options.transitions || []);
-    this.plugins = this.configurePlugins(options.plugins, StateMachine.plugins);
-    var enumSize = 0;
-    for(var n in options.ENUM){
+    this.plugins = this.configurePlugins(options.plugins, StateMachine.builtinPlugins);
+    let enumSize = 0;
+    for(let n in options.ENUM){
       enumSize ++;
     }
     if(enumSize==0){
       this.ENUM = {};
-      for(var i in this.states){
+      for(let i in this.states){
         this.ENUM[this.states[i]] = i;
       }
     }
@@ -64,7 +64,7 @@ class Config{
   }
 
   mapTransition(transition) {
-    var name = transition.name,
+    let name = transition.name,
         from = transition.from,
         to   = transition.to;
     this.addState(from);
@@ -117,7 +117,7 @@ class Config{
 
   configurePlugins(plugins, builtins) {
     plugins = plugins || [];
-    var n, plugin, pluginMap = {};
+    let n, plugin, pluginMap = {};
     for(n = 0; n < plugins.length ; n++) {
       plugin = plugins[n];
       if (typeof plugin === 'function'){
@@ -130,7 +130,7 @@ class Config{
         plugin.configure(this);
       }
     }
-    for(var m = 0; m < builtins.length ; m++) {
+    for(let m = 0; m < builtins.length ; m++) {
       plugin = builtins[m];
       /* istanbul ignore next */
       if (typeof plugin === 'function'){
@@ -150,7 +150,7 @@ class Config{
   }
 
   configureTransitions(transitions) {
-    var i, n, transition, from, to, wildcard = this.defaults.wildcard;
+    let i, n, transition, from, to, wildcard = this.defaults.wildcard;
     for(n = 0 ; n < transitions.length ; n++) {
       transition = transitions[n];
       from  = Array.isArray(transition.from) ? transition.from : [transition.from || wildcard]
@@ -162,13 +162,13 @@ class Config{
   }
 
   transitionFor(state, transition) {
-    var wildcard = this.defaults.wildcard;
+    let wildcard = this.defaults.wildcard;
     return this.map[state][transition] ||
            this.map[wildcard][transition];
   }
 
   transitionsFor(state) {
-    var wildcard = this.defaults.wildcard;
+    let wildcard = this.defaults.wildcard;
     return Object.keys(this.map[state]).concat(Object.keys(this.map[wildcard]));
   }
 

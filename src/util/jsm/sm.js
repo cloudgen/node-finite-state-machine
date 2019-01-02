@@ -1,8 +1,8 @@
 // This is the code provided for the main logic of a finite state machine
-const mixin      = require('../mixin');
-const Exception  = require('./exception');
-const plugin     = require('./plugin');
-const UNOBSERVED = [ null, [] ];
+const mixin         = require('../mixin');
+const FiniteStateException     = require('./exception');
+const pluginSystem  = require('./pluginSystem');
+const UNOBSERVED    = [ null, [] ];
 
 class SM{
 
@@ -18,7 +18,7 @@ class SM{
     this.ENUM       = {};
     this.createTime = Math.floor(Date.now());
     this.updateTime = Math.floor(Date.now());
-    for(var i in config.ENUM){
+    for(let i in config.ENUM){
       this.ENUM[i] = config.ENUM[i];
     }
   }
@@ -27,7 +27,7 @@ class SM{
   // current object's context
   init(args) {
     mixin(this.context, this.config.data.apply(this.context, args));
-    plugin.hook(this, 'init');
+    pluginSystem.hook(this, 'init');
     if (this.config.init.active){
       return this.fire(this.config.init.name, []);
     }
@@ -37,23 +37,23 @@ class SM{
   reset(){
     this.state=this.config.init.to;
     this.updateTime = this.createTime = Math.floor(Date.now());
-    plugin.hook(this, 'reset');
-    plugin.hook(this, 'change', this.config.init.to);
+    pluginSystem.hook(this, 'reset');
+    pluginSystem.hook(this, 'change', this.config.init.to);
   }
 
   // This function allows object set to any existing state
   // It's useful for persistence
   setState(state){
-    var state=this.config.states.find(function(s){return state==s});
+    let newState=this.config.states.find(function(s){return state==s});
     /* istanbul ignore next */
-    if(state){
-      this.state      = state;
+    if(newState){
+      this.state      = newState;
       this.updateTime = Math.floor(Date.now());
-      plugin.hook(this, 'setState', state);
-      plugin.hook(this, 'change', state);
+      pluginSystem.hook(this, 'setState', newState);
+      pluginSystem.hook(this, 'change', newState);
     }else{
       /* istanbul ignore next */
-      throw new Exception("Cannot set to undefined state", 'n/a', 'n/a', state, this.state);
+      throw new FiniteStateException("Cannot set to undefined state", 'n/a', 'n/a', state, this.state);
     }
   }
 
@@ -86,7 +86,7 @@ class SM{
   }
 
   seek(transition, args) {
-    var wildcard = this.config.defaults.wildcard,
+    let wildcard = this.config.defaults.wildcard,
         entry    = this.config.transitionFor(this.state, transition),
         to       = entry && entry.to;
     if (typeof to === 'function')
@@ -102,7 +102,7 @@ class SM{
   }
 
   transit(transition, from, to, args) {
-    var lifecycle = this.config.lifecycle,
+    let lifecycle = this.config.lifecycle,
         changed   = this.config.options.observeUnchangedState || (from !== to);
     if (!to)
       return this.context.onInvalidTransition(transition, from, to);
@@ -138,7 +138,7 @@ class SM{
 
   endTransit(result){
     this.pending = false;
-    plugin.hook(this, 'change', this.state);
+    pluginSystem.hook(this, 'change', this.state);
     this.updateTime = Math.floor(Date.now());
     return result;
   }
@@ -154,7 +154,7 @@ class SM{
 
   observe(args) {
     if (args.length === 2) {
-      var observer = {};
+      let observer = {};
       observer[args[0]] = args[1];
       this.observers.push(observer);
     }
@@ -164,7 +164,7 @@ class SM{
   }
 
   observersForEvent(event) {
-    var n = 0, max = this.observers.length, observer, result = [];
+    let n = 0, max = this.observers.length, observer, result = [];
     for( ; n < max ; n++) {
       observer = this.observers[n];
       if (observer[event])
@@ -177,19 +177,19 @@ class SM{
     if (events.length === 0) {
       return this.endTransit(previousResult === undefined ? true : previousResult);
     }
-    var event     = events[0][0],
+    let event     = events[0][0],
         observers = events[0][1],
         pluggable = events[0][2];
     args[0].event = event;
     if (event && pluggable && event !== previousEvent)
-      plugin.hook(this, 'lifecycle', args);
+      pluginSystem.hook(this, 'lifecycle', args);
 
     if (observers.length === 0) {
       events.shift();
       return this.observeEvents(events, args, event, previousResult);
     }
     else {
-      var observer = observers.shift(),
+      let observer = observers.shift(),
           result = observer[event].apply(observer, args);
       if (result && typeof result.then === 'function') {
         return result.then(this.observeEvents.bind(this, events, args, event))
@@ -205,11 +205,11 @@ class SM{
   }
 
   onInvalidTransition(transition, from, to) {
-    throw new Exception("transition is invalid in current state", transition, from, to, this.state);
+    throw new FiniteStateException("transition is invalid in current state", transition, from, to, this.state);
   }
 
   onPendingTransition(transition, from, to) {
-    throw new Exception("transition is invalid while previous transition is still in progress", transition, from, to, this.state);
+    throw new FiniteStateException("transition is invalid while previous transition is still in progress", transition, from, to, this.state);
   }
 }
 module.exports = SM;

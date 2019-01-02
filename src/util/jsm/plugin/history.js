@@ -1,7 +1,7 @@
 const camelize = require('../../camelize');
 
 module.exports = function(options) { options = options || {};
-  var past       = camelize(options.name || options.past   || 'history'),
+  let past       = camelize(options.name || options.past   || 'history'),
       pastTime   = camelize(past, 'time'),
       future     = camelize(options.future || 'future'),
       futureTime = camelize(future, 'time'),
@@ -11,7 +11,7 @@ module.exports = function(options) { options = options || {};
       canBack    = camelize('can',   back),
       canForward = camelize('can',   forward),
       max        = options.max;
-  var plugin = {
+  let plugin = {
     configure: function(config) {
       config.addTransitionLifecycleNames(back);
       config.addTransitionLifecycleNames(forward);
@@ -71,7 +71,7 @@ module.exports = function(options) { options = options || {};
   plugin.methods[back] = function() {
     if (!this[canBack])
       throw Error('no history');
-    var from     = this[past].pop(),
+    let from     = this[past].pop(),
         fromTime = this[pastTime].pop(),
         to       = this[past].pop();
     this[future].push(from);
@@ -81,7 +81,7 @@ module.exports = function(options) { options = options || {};
   plugin.methods[forward] = function() {
     if (!this[canForward])
       throw Error('no history');
-    var from = this.state,
+    let from = this.state,
         fromTime = this[futureTime].pop();
         to = this[future].pop();
     this[pastTime].push(fromTime);

@@ -1,5 +1,5 @@
 import test         from 'ava';
-import StateMachine from '../src/state-machine';
+import StateMachine from '../src/NodeFSM';
 
 const defaults = JSON.stringify(StateMachine.defaults);
 
